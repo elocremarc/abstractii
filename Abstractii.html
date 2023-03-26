@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Abstractii</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      const origin = window.location.origin;
+      const pathname = window.location.pathname;
+      const pathArray = pathname.split('/');
+      const inscriptionId = pathArray[pathArray.length - 1];
+      const mod = 2 ** 31 - 1;
+      const a = 1103515245;
+      const c = 12345;
+      let seed = hashCode(inscriptionId);
+
+      function random() {
+        seed = (a * seed + c) % mod;
+        return seed / mod;
+      }
+
+      function getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(random() * (max - min + 1)) + min;
+      }
+
+      function getRandomColor() {
+        const letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+          color += letters[Math.floor(random() * 16)];
+        }
+        return color;
+      }
+      function hashCode(str) {
+        let hash = 0;
+        if (str.length === 0) {
+          return hash;
+        }
+        for (let i = 0; i < str.length; i++) {
+          const char = str.charCodeAt(i);
+          hash = (hash << 5) - hash + char;
+          hash = hash & hash;
+        }
+        return Math.abs(hash);
+      }
+
+      function createSVGElement(tag, attributes) {
+        const element = document.createElementNS(
+          'http://www.w3.org/2000/svg',
+          tag
+        );
+        for (const key in attributes) {
+          element.setAttribute(key, attributes[key]);
+        }
+        return element;
+      }
+
+      function generateRandomSVGShape(svgWidth, svgHeight, shapeCount) {
+        const svg = createSVGElement('svg', {
+          width: '100%',
+          height: '100%',
+          viewBox: `0 0 ${svgWidth} ${svgHeight}`,
+        });
+
+        for (let i = 0; i < shapeCount; i++) {
+          const width = getRandomInt(10, svgWidth / 4);
+          const height = getRandomInt(10, svgHeight / 4);
+          const x = getRandomInt(0, svgWidth - width);
+          const y = getRandomInt(0, svgHeight - height);
+          const fillColor = getRandomColor();
+
+          const rect = createSVGElement('rect', {
+            x: x,
+            y: y,
+            width: width,
+            height: height,
+            fill: fillColor,
+          });
+
+          svg.appendChild(rect);
+        }
+
+        return svg;
+      }
+
+      const svgWidth = 400;
+      const svgHeight = 400;
+      const shapeCount = 9;
+      const randomSVGShape = generateRandomSVGShape(
+        svgWidth,
+        svgHeight,
+        shapeCount
+      );
+
+      document.body.appendChild(randomSVGShape);
+    </script>
+  </body>
+</html>

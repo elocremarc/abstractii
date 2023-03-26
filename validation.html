@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Abstractii Validation</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        line-height: 1.6;
+        background-color: white;
+        overflow: auto;
+      }
+      h1,
+      h2,
+      h3 {
+        margin-bottom: 10px;
+      }
+      code {
+        font-family: monospace;
+        background-color: #f0f0f0;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+      pre {
+        background-color: #f0f0f0;
+        padding: 10px;
+        border-radius: 3px;
+        overflow-x: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Abastractii Validation</h1>
+    <p>The following describes what is a valid Abstractii inscription</p>
+
+    <p>An Abstractii must be inscribed before the block 782588.</p>
+    <p>The sha256 hash of the Abstractii inscription content must be:</p>
+    <pre><code>eaa87520ad421aa7bc40c43fd30d0beb8dd490cc4080a8945c86c715e7db2406</code></pre>
+    <h2>Example</h2>
+    <pre><code>
+const crypto = require('crypto');
+// run the ord explorer locally with command
+// `ord server --http-port 8080`
+
+const explorer = 'http://0.0.0.0:8080';
+const inscriptionId = 'INSCRIPTION_ID';
+const url = `${explorer}/content/${inscriptionId}`;
+
+const abstractiiHash =
+    'eaa87520ad421aa7bc40c43fd30d0beb8dd490cc4080a8945c86c715e7db2406';
+fetch(url)
+    .then((res) => res.text())
+    .then((text) => {
+    const hash = crypto.createHash('sha256').update(text).digest('hex');
+    console.log(hash === abstractiiHash);
+    })
+    .catch((err) => console.error('error:' + err));        
+</code></pre>
+  </body>
+</html>
