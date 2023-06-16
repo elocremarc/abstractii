@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Abstractii Evolved Validation</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        line-height: 1.6;
+        background-color: white;
+        overflow: auto;
+      }
+      h1,
+      h2,
+      h3 {
+        margin-bottom: 10px;
+      }
+      code {
+        font-family: monospace;
+        background-color: #f0f0f0;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+      pre {
+        background-color: #f0f0f0;
+        padding: 10px;
+        border-radius: 3px;
+        overflow-x: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Abastractii Evolved Validation</h1>
+    <p>The following describes what is a valid Abstractii Evolved inscription</p>
+
+    <p>An Abstractii Evolved must be inscribed before the block 796528.</p>
+    <p>The sha256 hash of the Abstractii Evolved inscription content must be:</p>
+    <pre><code>1816a5cc285047c1c80462d09177e5cdc53c5e086b9f1a735710755f1b5d72f2</code></pre>
+    <h2>Example</h2>
+    <pre><code>
+      const crypto = require('crypto');
+
+      //run the ord explorer locally with command
+      //`ord server --http-port 8080`
+
+      //change the explorer to the one you are running locally or use your trusted ord explorer
+      const explorer = 'http://0.0.0.0:8080';
+      const inscriptionId = '<inscription-Id>';
+      const url = `${explorer}/content/${inscriptionId}`;
+
+      const abstractiiHash =
+        '1816a5cc285047c1c80462d09177e5cdc53c5e086b9f1a735710755f1b5d72f2';
+      fetch(url)
+        .then((res) => res.text())
+        .then((text) => {
+          const hash = crypto.createHash('sha256').update(text).digest('hex');
+          console.log(hash === abstractiiHash);
+        })
+        .catch((err) => console.error('error:' + err));
+
+</code></pre>
+  </body>
+</html>
