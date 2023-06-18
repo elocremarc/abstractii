@@ -15,7 +15,7 @@ Abstractii Evolved is a generative abstract art experience that is free for anyo
 What defines a valid Abstractii Evolved:
 https://ordinals.com/content/c5619839420c6b298658726bfe5b5bd0180fae11c4b8113d638c9f44fbc44133i0
 
-# How to do your own project like this Abstractii
+# How to do your own project like Abstractii
 
 ## How Generation works
 See both the `Abstractii.html` and the `AbstractiiEvolved.html` to see how to do generative inscriptions. 
