@@ -28,9 +28,9 @@ The `AbstractiiEvolved.html` uses the endpoint in ord `/blockheight` to seed the
 
 ## Making it open for anyone to inscribe.
 
-You can inscribe them yourself and then sell them. Or you can make them free to inscribe by anyone. The way to do this is have everyone inscribe the same file. Then you simply take the hash of the `/content/inscriptionId` to validate it
+You can inscribe them yourself and then sell them. Or you can make them free to inscribe by anyone. The way to do this is have everyone inscribe the same file. Then you simply take the hash of the `/content/inscriptionId` to validate it.
 
-See `validateAbstractii.js` and  `validatAsbstractiiEvolved.js`
+See `validateAbstractii.js` and `validateAbstractiiEvolved.js`
 
 This is a way to find what is in the collection without needing to know who is  inscribing them.
 
@@ -46,3 +46,21 @@ The rules inscriptions can be seen [here](https://ordinals.com/content/25a89ffc6
 ## Indexing the collection
 
 Once the block cut off has pased you need to find out what makes up the collection. See the `indexInscriptions.js` to do this. modify the paramaters of your collection. This will output a json file with the collection.
+
+## Using Regtest To Test it.
+
+You should test everything in regtest. You can run Ord in regtest. This way you can get your `validation.html` prepared and inscribe the rules before you release the project. Here is how you run regtest you need to have [ord](https://github.com/ordinals/ord) on your machine with bitcoin core. You don't need to have the full bitcoin blockchain to run regtest.
+
+Here are the commands to run regtest
+```
+bitcoind -regtest -txindex
+ord -r wallet create
+ord -r wallet receive
+bitcoin-cli -regtest generatetoaddress 101 <receiveAddress>
+ord -r wallet balance
+ord -r wallet inscribe <file> --fee-rate 1
+bitcoin-cli -regtest generatetoaddress 1 <receiveAddress>
+ord -r server --http-port 8080
+```
+navigate to `localhost:8080` in your browser.
+
