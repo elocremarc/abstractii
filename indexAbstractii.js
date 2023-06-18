@@ -44,7 +44,7 @@ async function getData(url) {
         inscriptions.push({
           id: inscriptionId,
           meta: {
-            name: `Abstractii #${abstractiiCount}`
+            name: `Abstractii Evolved #${abstractiiCount}`
           }
         });
         abstractiiCount++;
