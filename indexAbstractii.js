@@ -28,7 +28,7 @@ async function getData(url) {
   let abstractiiCount = 1;
 
   for (let item of allResults) {
-    if(item.genesis_block_height >= 783098) {
+    if(item.genesis_block_height >= 797536) {
       continue; // Skip if the block height is not before 783098
     }
 
@@ -64,4 +64,4 @@ async function getData(url) {
   });
 }
 
-getData('https://api.hiro.so/ordinals/v1/inscriptions?from_number=12050016&to_number=12050019');
+getData('https://api.hiro.so/ordinals/v1/inscriptions?from_genesis_block_height=794543&to_genesis_block_height=797536&mime_type=text/html');
