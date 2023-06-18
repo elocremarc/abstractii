@@ -4,7 +4,21 @@ const fetch = require('node-fetch');
 
 const explorer = 'https://ordinals.com';
 
-async function indexInscriptions(fromGenesisBlockHeight, toGenesisBlockHeight, inscriptionContentHash) {
+/**
+ * Index Inscriptions Utility
+ *
+ * This script fetches inscriptions data within a specified range of Genesis block heights,
+ * checks if the content hash of each inscription matches a given hash,
+ * and creates a JSON file with the details of matching inscriptions.
+ *
+ * Parameters:
+ * - fromGenesisBlockHeight: The starting Genesis block height for fetching inscriptions.
+ * - toGenesisBlockHeight: The ending Genesis block height for fetching inscriptions.
+ * - inscriptionContentHash: The expected content hash of the inscriptions.
+ * - inscriptionNamePrefix: The prefix for the name of matching inscriptions.
+ */
+
+async function indexInscriptions(fromGenesisBlockHeight, toGenesisBlockHeight, inscriptionContentHash, inscriptionNamePrefix) {
   const baseUrl = 'https://api.hiro.so/ordinals/v1/inscriptions';
   const mimeType = 'text/html';
 
@@ -46,10 +60,11 @@ async function indexInscriptions(fromGenesisBlockHeight, toGenesisBlockHeight, i
       let hash = crypto.createHash('sha256').update(text).digest('hex');
 
       if (hash === inscriptionContentHash) {
+        const inscriptionName = `${inscriptionNamePrefix} #${inscriptionCount}`;
         inscriptions.push({
           id: inscriptionId,
           meta: {
-            name: `Inscription #${inscriptionCount}`,
+            name: inscriptionName,
           },
         });
         inscriptionCount++;
@@ -69,8 +84,10 @@ async function indexInscriptions(fromGenesisBlockHeight, toGenesisBlockHeight, i
   });
 }
 
+// Example usage
 const fromGenesisBlockHeight = 794543;
 const toGenesisBlockHeight = 797536;
 const inscriptionContentHash = '1816a5cc285047c1c80462d09177e5cdc53c5e086b9f1a735710755f1b5d72f2';
+const inscriptionNamePrefix = 'Inscription';
 
-indexInscriptions(fromGenesisBlockHeight, toGenesisBlockHeight, inscriptionContentHash);
+indexInscriptions(fromGenesisBlockHeight, toGenesisBlockHeight, inscriptionContentHash, inscriptionNamePrefix);
